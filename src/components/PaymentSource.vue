@@ -1,19 +1,17 @@
 <template>
-    <div class="category" @dragover.prevent @drop="onDropInner">
-      <p class="category--title">{{ category.name }}</p>
-      <div class="category--icon">$</div>
-      <p class="category--amount">{{ category.amount }}</p>
-    </div>
+  <div class="category">
+    <p class="category--title">{{ source.name }}</p>
+    <div class="category--icon">$</div>
+    <p class="category--amount">{{ source.amount }}</p>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'category',
-  props: ['category', 'index', 'onDrop'],
-  methods: {
-    onDropInner() {
-      this.onDrop(this.index);
-    }
+  name: 'paymentSource',
+  props: ['source'],
+  data() {
+    return {}
   }
 }
 </script>

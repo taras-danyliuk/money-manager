@@ -20,3 +20,13 @@ export default new Router({
     }
   ]
 })
+
+Array.prototype.move = function (element, offset) {
+  const index = this.indexOf(element);
+  const newIndex = index + offset;
+  let removedElement = null;
+
+  if (newIndex > -1 && newIndex < this.length) removedElement = this.splice(index, 1)[0];
+
+  this.splice(newIndex, 0, removedElement);
+};
