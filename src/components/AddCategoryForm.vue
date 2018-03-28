@@ -3,11 +3,8 @@
     <div class="form-wrapper--close" @click="close">&times;</div>
 
     <form class="add-form" v-on:submit.prevent="submitForm">
-      <label class="add-form--label">Payment Source name</label>
+      <label class="add-form--label">Category name</label>
       <input class="add-form--input" type="text" v-model="name"/>
-
-      <label class="add-form--label">Payment Source current amount</label>
-      <input class="add-form--input" type="number" v-model="initialAmount"/>
 
       <button type="submit" class="add-form--submit">Save</button>
     </form>
@@ -16,21 +13,17 @@
 
 <script>
 export default {
-  name: 'addSourceForm',
+  name: 'addCategoryForm',
   props: ['submit', 'close'],
   data() {
     return {
       name: '',
-      initialAmount: 0,
     }
   },
   methods: {
     submitForm() {
       if (this.name !== '') {
-        this.submit({
-          name: this.name,
-          amount: this.initialAmount
-        })
+        this.submit(this.name)
       }
     }
   }

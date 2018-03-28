@@ -12,10 +12,11 @@
 
 <script>
 import AddSourceForm from './AddSourceForm'
+import AddCategoryForm from './AddCategoryForm'
 
 export default {
   name: 'modal',
-  components: {AddSourceForm},
+  components: {AddSourceForm, AddCategoryForm},
   props: ['modalProperties', 'closeModal'],
 }
 </script>

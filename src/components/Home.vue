@@ -1,8 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-
-    <button @click="toggleDraggable">Toggle</button>
+    <button @click="toggleDraggable">Toggle edit mode</button>
 
     <div id="sources" class="categories-wrapper">
       <payment-source
@@ -11,8 +9,8 @@
         v-bind:key="index"
       />
 
-      <div class="add-source">
-        <div class="add-source--icon" @click="openAddSource">+</div>
+      <div class="add-item">
+        <div class="add-item--icon" @click="openAddSource">+</div>
       </div>
     </div>
 
@@ -22,7 +20,12 @@
         v-bind:key="index"
         v-bind:category="category"
         v-bind:index="index"
-        v-bind:on-drop="onDrop"/>
+        v-bind:on-drop="onDrop"
+      />
+
+      <div class="add-item">
+        <div class="add-item--icon" @click="openAddCategory">+</div>
+      </div>
     </div>
 
     <modal
@@ -45,12 +48,12 @@ export default {
   components: {PaymentSource, Category, Modal},
   data () {
     return {
-      currentChoosen: 0,
-      msg: 'Home',
+      currentChosen: 0,
       sources: [],
       sourcesSortable: [],
       categories: [],
       categoriesSortable: [],
+      history: [],
       modalProperties: {},
       showModal: false,
     }
@@ -58,6 +61,7 @@ export default {
   created() {
     const sources = localStorage.getItem('sources');
     const categories = localStorage.getItem('categories');
+    const history = localStorage.getItem('history');
 
     if (sources) {
       this.sources = JSON.parse(sources);
@@ -67,6 +71,9 @@ export default {
       this.categories = JSON.parse(categories);
       this.categoriesSortable = this.categories.slice();
     }
+    if (history) {
+      this.history = JSON.parse(history);
+    }
   },
   mounted () {
     this.sortableSources = new Sortable(document.getElementById('sources'), {
@@ -74,11 +81,13 @@ export default {
       group: 'sources',
       onChoose: this.onChoose,
       onSort: this.onSort,
+      filter: '.add-item',
     });
     this.sortableCategories = new Sortable(document.getElementById('categories'), {
       sort: false,
       disabled: true,
       group: 'category',
+      filter: '.add-item',
     });
   },
   methods: {
@@ -89,10 +98,10 @@ export default {
       this.sortableCategories.option('sort', !state);
     },
     onChoose(event) {
-      this.currentChoosen = event.oldIndex;
+      this.currentChosen = event.oldIndex;
     },
     onDrop(target) {
-      console.log(`From ${this.sources[this.currentChoosen].name} to ${this.categories[target].name}`);
+      console.log(`From ${this.sources[this.currentChosen].name} to ${this.categories[target].name}`);
     },
     onSort(evt) {
       const target = evt.to.id;
@@ -112,11 +121,30 @@ export default {
         submit: this.addSource
       }
     },
+    openAddCategory() {
+      this.showModal = !this.showModal;
+      this.modalProperties = {
+        component: 'add-category-form',
+        submit: this.addCategory
+      }
+    },
     addSource(source) {
       this.sources.push(source);
       this.sourcesSortable.push(source);
 
       localStorage.setItem('sources', JSON.stringify(this.sources));
+    },
+    addCategory(category) {
+      this.category.push({
+        name: category,
+        amount: 0
+      });
+      this.sourcesSortable.push({
+        name: category,
+        amount: 0
+      });
+
+      localStorage.setItem('categories', JSON.stringify(this.category));
     }
   }
 }
@@ -130,7 +158,7 @@ export default {
     flex-wrap: wrap;
   }
 
-  .add-source {
+  .add-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -140,7 +168,7 @@ export default {
     user-select: none;
   }
 
-  .add-source--icon {
+  .add-item--icon {
     border-radius: 25px;
     width: 50px;
     height: 50px;
