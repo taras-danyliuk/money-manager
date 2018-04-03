@@ -2,26 +2,30 @@
   <div class="hello">
     <button @click="toggleDraggable">Toggle edit mode</button>
 
-    <div id="sources" class="categories-wrapper">
-      <payment-source
-        v-for="(source, index) in sourcesSortable"
-        v-bind:source="source"
-        v-bind:key="index"
-      />
+    <div class="section-block">
+      <div id="sources" class="categories-wrapper">
+        <payment-source
+          v-for="(source, index) in sourcesSortable"
+          v-bind:source="source"
+          v-bind:key="index"
+        />
 
-      <add-item :onClick="openAddSource"/>
+        <add-item :onClick="openAddSource"/>
+      </div>
     </div>
 
-    <div id="categories" class="categories-wrapper">
-      <category
-        v-for="(category, index) in categoriesSortable"
-        v-bind:key="index"
-        v-bind:category="category"
-        v-bind:index="index"
-        v-bind:on-drop="onDrop"
-      />
+    <div class="section-block">
+      <div id="categories" class="categories-wrapper">
+        <category
+          v-for="(category, index) in categoriesSortable"
+          v-bind:key="index"
+          v-bind:category="category"
+          v-bind:index="index"
+          v-bind:on-drop="onDrop"
+        />
 
-      <add-item :onClick="openAddCategory"/>
+        <add-item :onClick="openAddCategory"/>
+      </div>
     </div>
 
     <modal

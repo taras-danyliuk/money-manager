@@ -23,7 +23,7 @@ export default {
     flex-direction: column;
     align-items: center;
     margin: 10px 10px;
-    width: 150px;
+    width: 120px;
     flex-shrink: 0;
     user-select: none;
   }
@@ -41,7 +41,7 @@ export default {
     border-radius: 25px;
     width: 50px;
     height: 50px;
-    background-color: lightyellow;
+    background-color: lightgreen;
     display: flex;
     justify-content: center;
     align-items: center;
