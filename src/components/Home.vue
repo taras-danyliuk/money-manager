@@ -42,11 +42,11 @@ import Sortable from 'sortablejs'
 import PaymentSource from './PaymentSource'
 import Category from './Category'
 import Modal from './Modal'
-import addItem from './addItem'
+import AddItem from './AddItem'
 
 export default {
   name: 'Home',
-  components: {PaymentSource, Category, Modal, addItem},
+  components: {PaymentSource, Category, Modal, AddItem},
   data () {
     return {
       currentChosen: 0,
